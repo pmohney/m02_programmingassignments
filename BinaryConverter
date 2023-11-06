@@ -1,0 +1,48 @@
+// 11/5 /23
+// Pierce Mohney
+// SDEV 200
+// Assignment 2-3
+// This program will the bin@Dec method to convert binary strings to decimals and decipher if a string is a valid binary string. 
+
+public class BinaryConverter {
+    public static class BinaryFormatException extends Exception {
+        public BinaryFormatException(String message) {
+            super(message);
+//Outputs exception message for invalid binary string
+        }
+    }
+
+    public static int bin2Dec(String binaryString) throws BinaryFormatException {
+        if (!binaryString.matches("[01]+")) {
+            throw new BinaryFormatException("Invalid binary string: " + binaryString);
+        }
+//Converts binary string to integer and checks if input is a valid binary string
+
+        int decimal = 0;
+        int length = binaryString.length();
+
+        for (int i = length - 1; i >= 0; i--) {
+            int bit = binaryString.charAt(i) - '0';
+            decimal += bit * Math.pow(2, length - 1 - i);
+//Converts binary string to decimal
+        }
+
+        return decimal;
+    }
+
+    public static void main(String[] args) {
+        try {
+            String binaryString = "1010";
+            int decimalValue = bin2Dec(binaryString);
+            System.out.println("Binary: " + binaryString + " to Decimal: " + decimalValue);
+//Test code for valid binary string
+
+            binaryString = "2222"; 
+            decimalValue = bin2Dec(binaryString);
+            System.out.println("Binary: " + binaryString + " to Decimal: " + decimalValue);
+        } catch (BinaryFormatException e) {
+            System.err.println("Exception: " + e.getMessage());
+//Test code for invalid binary string
+        }
+    }
+}
